@@ -2,40 +2,39 @@ import java.util.*;
 
 class Edge{
     int u,v,w;
-    Edge(int u, int v, int w){
-        this.u = u;
-        this.v = v;
-        this.w = w;
+    public Edge(int u, int v, int w){
+        this.u=u;
+        this.v=v;
+        this.w=w;
     }
 }
 
-class EdgeCom implements Comparator<Edge>{
+class EdgeCmp implements Comparator<Edge>{
     public int compare(Edge u, Edge v){
-        return u.w - v.w;
+        return Integer.compare(u.w, v.w);
     }
 }
 
-class prims_mst {
+public class RoadReparation {
     static final int N = 100007;
-    static Vector<Edge>[] vector = new Vector[N];
     static boolean[] visited = new boolean[N];
+    static Vector<Edge>[] vector = (Vector<Edge>[]) new Vector[N];
 
-    public static void prims(int s){
-        PriorityQueue<Edge> pq = new PriorityQueue<>(new EdgeCom());
+
+    public static void prims(int s, int n){
+        PriorityQueue<Edge> pq = new PriorityQueue<>(new EdgeCmp());
         Vector<Edge> edgeList = new Vector<>();
-
         pq.add(new Edge(s, s, 0));
-        int cnt = 0;
+        int count = 0;
 
         while(!pq.isEmpty()){
             Edge parent = pq.poll();
             int u = parent.u;
             int v = parent.v;
             int w = parent.w;
-
             if(visited[v]) continue;
             visited[v] = true;
-            cnt++;
+            count++;
             edgeList.add(parent);
 
             for(Edge child: vector[v]){
@@ -45,22 +44,22 @@ class prims_mst {
             }
         }
 
-        edgeList.remove(0);
-        System.out.println("-----------");
-        System.out.println("Edge List");
-        int count = 0;
+        long sum = 0;
         for(Edge edge: edgeList){
-            System.out.println(edge.u+" "+edge.v+" "+edge.w);
-            count += edge.w;
+            sum += (long)(edge.w);
         }
-        System.out.println(count);
+
+        if(count == n){
+            System.out.println(sum);
+        }
+        else{
+            System.out.println("IMPOSSIBLE");
+        }
     }
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        System.out.print("Enter your node: ");
         int n = in.nextInt();
-        System.out.print("Enter your edge: ");
         int e = in.nextInt();
 
         for(int i=0; i<=n; i++){
@@ -75,7 +74,7 @@ class prims_mst {
             vector[v].add(new Edge(v, u, w));
         }
 
-        // prims algorithm call here 
-        prims(1);
+        prims(1,n);
+
     }
 }
