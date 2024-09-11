@@ -22,10 +22,10 @@ public class kruskal_mst {
     }
 
     public static int dsu_find(int node){
-        if(parent[node] == -1){
-            return node;
+        while(parent[node] != -1){
+            node = parent[node];
         }
-        return parent[node] = dsu_find(parent[node]);
+        return node;
     }
 
     public static void dsu_union(int a, int b){
@@ -46,9 +46,9 @@ public class kruskal_mst {
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        // System.out.print("Enter your node: ");
+        System.out.print("Enter your node: ");
         int n = in.nextInt();
-        // System.out.print("Enter your edge: ");
+        System.out.print("Enter your edge: ");
         int e = in.nextInt();
 
         Vector<Edge> vector = new Vector<>();
