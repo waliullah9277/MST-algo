@@ -23,10 +23,10 @@ public class RoadReparationKruskal {
     }
 
     public static int dsu_find(int node){
-        if(parent[node] == -1){
-            return node;
+        while(parent[node] != -1){
+            node = parent[node];
         }
-        return parent[node] = dsu_find(parent[node]);
+        return node;
     }
 
     public static void dsu_union(int u, int v){
